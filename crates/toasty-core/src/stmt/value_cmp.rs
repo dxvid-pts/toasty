@@ -112,3 +112,23 @@ impl PartialEq<Value> for str {
         other.eq(self)
     }
 }
+
+// Bytes (Vec<u8>) support comparisons
+
+impl PartialEq<Vec<u8>> for Value {
+    fn eq(&self, other: &Vec<u8>) -> bool {
+        matches!(self, Value::Bytes(val) if val == other)
+    }
+}
+
+impl PartialEq<Vec<u8>> for Expr {
+    fn eq(&self, other: &Vec<u8>) -> bool {
+        matches!(self, Expr::Value(Value::Bytes(val)) if val == other)
+    }
+}
+
+impl PartialEq<Value> for Vec<u8> {
+    fn eq(&self, other: &Value) -> bool {
+        other.eq(self)
+    }
+}

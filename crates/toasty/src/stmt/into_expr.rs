@@ -147,6 +147,58 @@ impl IntoExpr<Self> for String {
     }
 }
 
+// Bytes (Vec<u8>) support
+impl IntoExpr<Vec<u8>> for Vec<u8> {
+    fn into_expr(self) -> Expr<Vec<u8>> {
+        Expr::from_value(Value::from(self))
+    }
+
+    fn by_ref(&self) -> Expr<Vec<u8>> {
+        Expr::from_value(Value::from(self))
+    }
+}
+
+impl IntoExpr<Vec<u8>> for &[u8] {
+    fn into_expr(self) -> Expr<Vec<u8>> {
+        // Accept byte slices by copying into owned bytes
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+
+    fn by_ref(&self) -> Expr<Vec<u8>> {
+        Expr::from_value(Value::from((*self).to_vec()))
+    }
+}
+
+impl IntoExpr<Option<Vec<u8>>> for &[u8] {
+    fn into_expr(self) -> Expr<Option<Vec<u8>>> {
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+
+    fn by_ref(&self) -> Expr<Option<Vec<u8>>> {
+        Expr::from_value(Value::from((*self).to_vec()))
+    }
+}
+
+impl<const N: usize> IntoExpr<Vec<u8>> for [u8; N] {
+    fn into_expr(self) -> Expr<Vec<u8>> {
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+
+    fn by_ref(&self) -> Expr<Vec<u8>> {
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+}
+
+impl<const N: usize> IntoExpr<Option<Vec<u8>>> for [u8; N] {
+    fn into_expr(self) -> Expr<Option<Vec<u8>>> {
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+
+    fn by_ref(&self) -> Expr<Option<Vec<u8>>> {
+        Expr::from_value(Value::from(self.to_vec()))
+    }
+}
+
 impl<T, U, const N: usize> IntoExpr<[T]> for [U; N]
 where
     U: IntoExpr<T>,
@@ -277,4 +329,12 @@ fn assert_bounds() {
     assert_into_expr::<[(String, String)], &[(&String, &String)]>();
     assert_into_expr::<[(String, String)], [(&String, &String); 3]>();
     assert_into_expr::<[(String, String)], &[(&String, &String); 3]>();
+
+    // Bytes support
+    assert_into_expr::<Vec<u8>, Vec<u8>>();
+    assert_into_expr::<Vec<u8>, &Vec<u8>>();
+    assert_into_expr::<Vec<u8>, &[u8]>();
+    assert_into_expr::<Vec<u8>, [u8; 3]>();
+    assert_into_expr::<Option<Vec<u8>>, &[u8]>();
+    assert_into_expr::<Option<Vec<u8>>, [u8; 3]>();
 }

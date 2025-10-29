@@ -294,6 +294,10 @@ fn postgres_to_toasty(
                 _ => stmt::Value::I64(v), // Default fallback
             })
             .unwrap_or(stmt::Value::Null)
+    } else if column.type_() == &Type::BYTEA {
+        row.get::<usize, Option<Vec<u8>>>(index)
+            .map(stmt::Value::Bytes)
+            .unwrap_or(stmt::Value::Null)
     } else {
         todo!(
             "implement PostgreSQL to toasty conversion for `{:#?}`",

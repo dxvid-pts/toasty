@@ -119,10 +119,11 @@ impl ToSql for Value {
             stmt::Value::Id(value) => value.to_string().to_sql(ty, out),
             stmt::Value::Null => Ok(IsNull::Yes),
             stmt::Value::String(value) => value.to_sql(ty, out),
+            stmt::Value::Bytes(value) => value.as_slice().to_sql(ty, out),
             value => todo!("{value:#?}"),
         }
     }
 
-    accepts!(BOOL, INT2, INT4, INT8, TEXT, VARCHAR);
+    accepts!(BOOL, INT2, INT4, INT8, TEXT, VARCHAR, BYTEA);
     to_sql_checked!();
 }
