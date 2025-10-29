@@ -46,6 +46,13 @@ impl<T> Expr<[T]> {
     }
 }
 
+impl Expr<Vec<u8>> {
+    /// Construct a bytes expression from any byte buffer convertible into Vec<u8>.
+    pub fn value<B: Into<Vec<u8>>>(bytes: B) -> Self {
+        Self::from_value(stmt::Value::from(bytes.into()))
+    }
+}
+
 impl Expr<bool> {
     pub fn and(self, rhs: impl IntoExpr<bool>) -> Self {
         Self::from_untyped(stmt::Expr::and(self.untyped, rhs.into_expr().untyped))
