@@ -52,6 +52,19 @@ impl Primitive for String {
     }
 }
 
+impl Primitive for Vec<u8> {
+    fn ty() -> stmt::Type {
+        stmt::Type::Bytes
+    }
+
+    fn load(value: stmt::Value) -> Result<Self> {
+        match value {
+            stmt::Value::Bytes(v) => Ok(v),
+            _ => anyhow::bail!("cannot convert value to Vec<u8> {value:#?}"),
+        }
+    }
+}
+
 impl<T: Model> Primitive for Id<T> {
     fn ty() -> stmt::Type {
         stmt::Type::Id(T::id())

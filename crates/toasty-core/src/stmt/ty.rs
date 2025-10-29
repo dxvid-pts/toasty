@@ -13,6 +13,9 @@ pub enum Type {
     /// String type
     String,
 
+    /// Binary bytes
+    Bytes,
+
     /// Signed 8-bit integer
     I8,
 
@@ -103,6 +106,10 @@ impl Type {
 
     pub fn is_string(&self) -> bool {
         matches!(self, Self::String)
+    }
+
+    pub fn is_bytes(&self) -> bool {
+        matches!(self, Self::Bytes)
     }
 
     pub fn cast(&self, value: Value) -> Result<Value> {

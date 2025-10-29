@@ -223,6 +223,7 @@ fn value_from_param(value: &stmt::Value) -> rusqlite::types::ToSqlOutput<'_> {
         U32(v) => ToSqlOutput::Owned(Value::Integer(*v as i64)),
         U64(v) => ToSqlOutput::Owned(Value::Integer(*v as i64)),
         String(v) => ToSqlOutput::Borrowed(ValueRef::Text(v.as_bytes())),
+        Bytes(v) => ToSqlOutput::Borrowed(ValueRef::Blob(v.as_slice())),
         Null => ToSqlOutput::Owned(Value::Null),
         Enum(value_enum) => {
             let v = match &value_enum.fields[..] {
@@ -266,6 +267,14 @@ fn sqlite_to_toasty(row: &rusqlite::Row, index: usize, ty: &stmt::Type) -> stmt:
             _ => todo!("ty={ty:#?}"),
         },
         Some(SqlValue::Text(value)) => stmt::Value::String(value),
+        Some(SqlValue::Blob(value)) => match ty {
+            stmt::Type::Bytes => stmt::Value::Bytes(value),
+            stmt::Type::String => match String::from_utf8(value) {
+                Ok(s) => stmt::Value::String(s),
+                Err(e) => panic!("invalid UTF-8 blob for String column: {e}"),
+            },
+            _ => todo!("blob with ty={ty:#?}"),
+        },
         None => stmt::Value::Null,
         _ => todo!("value={value:#?}"),
     }

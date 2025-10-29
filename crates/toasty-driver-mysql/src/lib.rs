@@ -225,10 +225,15 @@ fn mysql_to_toasty(
     match column.column_type() {
         MYSQL_TYPE_NULL => stmt::Value::Null,
 
-        MYSQL_TYPE_VARCHAR | MYSQL_TYPE_VAR_STRING | MYSQL_TYPE_BLOB => {
+        MYSQL_TYPE_VARCHAR | MYSQL_TYPE_VAR_STRING => {
             assert!(ty.is_string());
             extract_or_null(row, i, stmt::Value::String)
         }
+        MYSQL_TYPE_BLOB => match ty {
+            stmt::Type::Bytes => extract_or_null(row, i, stmt::Value::Bytes),
+            stmt::Type::String => extract_or_null(row, i, stmt::Value::String),
+            _ => todo!("unexpected MySQL BLOB mapping for ty={ty:#?}"),
+        },
 
         MYSQL_TYPE_TINY | MYSQL_TYPE_SHORT | MYSQL_TYPE_INT24 | MYSQL_TYPE_LONG
         | MYSQL_TYPE_LONGLONG => match ty {

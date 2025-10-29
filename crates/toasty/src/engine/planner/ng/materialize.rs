@@ -361,7 +361,7 @@ impl MaterializePlanner<'_> {
 
         let exec_stmt_node_id = if stmt.filter_or_default().is_false() {
             // Don't bother querying and just return false
-            self.insert_const(vec![], self.engine.infer_record_list_ty(&stmt, &columns))
+            self.insert_const(Vec::<toasty_core::stmt::Value>::new(), self.engine.infer_record_list_ty(&stmt, &columns))
         } else if self.engine.capability().sql {
             if !columns.is_empty() {
                 assert!(stmt.is_query(), "TODO");

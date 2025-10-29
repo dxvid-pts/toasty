@@ -51,6 +51,9 @@ pub enum Value {
 
     /// String value, either borrowed or owned
     String(String),
+
+    /// Raw bytes value
+    Bytes(Vec<u8>),
 }
 
 impl Value {
@@ -173,6 +176,7 @@ impl Value {
                 _ => false,
             },
             Self::String(_) => ty.is_string(),
+            Self::Bytes(_) => ty.is_bytes(),
             _ => todo!("value={self:#?}, ty={ty:#?}"),
         }
     }
@@ -187,6 +191,7 @@ impl Value {
             Value::Null => Type::Null,
             Value::Record(v) => Type::Record(v.fields.iter().map(Self::infer_ty).collect()),
             Value::String(_) => Type::String,
+            Value::Bytes(_) => Type::Bytes,
             _ => todo!("{self:#?}"),
         }
     }
@@ -237,6 +242,18 @@ impl From<&String> for Value {
 impl From<&str> for Value {
     fn from(src: &str) -> Self {
         Self::String(src.to_string())
+    }
+}
+
+impl From<Vec<u8>> for Value {
+    fn from(value: Vec<u8>) -> Self {
+        Self::Bytes(value)
+    }
+}
+
+impl From<&Vec<u8>> for Value {
+    fn from(value: &Vec<u8>) -> Self {
+        Self::Bytes(value.clone())
     }
 }
 

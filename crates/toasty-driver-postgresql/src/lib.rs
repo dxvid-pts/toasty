@@ -315,6 +315,7 @@ fn postgres_ty_for_value(value: &stmt::Value) -> Type {
         stmt::Value::U64(_) => Type::INT8,
         stmt::Value::Id(_) => Type::TEXT,
         stmt::Value::String(_) => Type::TEXT,
+        stmt::Value::Bytes(_) => Type::BYTEA,
         stmt::Value::Null => Type::TEXT, // Default for NULL values
         _ => todo!("postgres_ty_for_value: {value:#?}"),
     }

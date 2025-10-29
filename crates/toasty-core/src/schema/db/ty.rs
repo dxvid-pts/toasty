@@ -15,6 +15,9 @@ pub enum Type {
     Text,
 
     VarChar(u64),
+
+    /// Binary blob type
+    Blob,
 }
 
 impl Type {
@@ -38,6 +41,7 @@ impl Type {
                 stmt::Type::U32 => Ok(Type::UnsignedInteger(4)),
                 stmt::Type::U64 => Ok(Type::UnsignedInteger(8)),
                 stmt::Type::String => Ok(db.default_string_type.clone()),
+                stmt::Type::Bytes => Ok(Type::Blob),
                 // Gotta support some app-level types as well for now.
                 //
                 // TODO: not really correct, but we are getting rid of ID types
