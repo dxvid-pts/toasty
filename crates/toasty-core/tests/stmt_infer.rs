@@ -27,6 +27,7 @@ fn test_basic_type_variants() {
         Type::U32,
         Type::U64,
         Type::String,
+        Type::Bytes,
         Type::Null,
         Type::Unknown,
     ];
@@ -44,6 +45,17 @@ fn test_basic_type_variants() {
             }
         }
     }
+}
+
+#[test]
+fn test_bytes_value_inference_and_is_a() {
+    // A Bytes value should infer to the Bytes type
+    let v = Value::Bytes(vec![1, 2, 3]);
+    assert_eq!(v.infer_ty(), Type::Bytes);
+
+    // is_a should recognize Bytes
+    assert!(v.is_a(&Type::Bytes));
+    assert!(!v.is_a(&Type::String));
 }
 
 #[test]
