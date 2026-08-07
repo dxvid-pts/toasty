@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0](https://github.com/tokio-rs/toasty/compare/toasty-sql-v0.9.0...toasty-sql-v0.10.0) - 2026-08-07
+
+### Changed
+
+- [**breaking**] The SQL dialect is now explicitly named on `Capability::sql` ([#1155])
+
+[#1155]: https://github.com/tokio-rs/toasty/pull/1155
+
 ## [0.9.0](https://github.com/tokio-rs/toasty/compare/toasty-sql-v0.8.0...toasty-sql-v0.9.0) - 2026-07-23
 
 ### Added

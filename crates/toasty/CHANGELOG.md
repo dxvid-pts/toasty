@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0](https://github.com/tokio-rs/toasty/compare/toasty-v0.9.0...toasty-v0.10.0) - 2026-08-07
+
+### Added
+
+- Embed migrations in application binaries ([#1095])
+
+### Fixed
+
+- [**breaking**] Make TLS features additive with SQLx ([#1147])
+- [**breaking**] Name the SQL dialect on `Capability::sql` ([#1155])
+- Omit previous cursor on first page ([#1153])
+- Preserve pagination cursors through includes ([#1152])
+- Preserve query offset when selecting one row ([#1151])
+- Exclude null foreign keys from relation subqueries ([#1148])
+- Make cursor pagination deterministic ([#1142])
+- Resolve authority-form sqlite and turso URLs to a file path ([#1127])
+- Paginate with multiple order by keys ([#1124])
+
+[#1095]: https://github.com/tokio-rs/toasty/pull/1095
+[#1124]: https://github.com/tokio-rs/toasty/pull/1124
+[#1127]: https://github.com/tokio-rs/toasty/pull/1127
+[#1142]: https://github.com/tokio-rs/toasty/pull/1142
+[#1147]: https://github.com/tokio-rs/toasty/pull/1147
+[#1148]: https://github.com/tokio-rs/toasty/pull/1148
+[#1151]: https://github.com/tokio-rs/toasty/pull/1151
+[#1152]: https://github.com/tokio-rs/toasty/pull/1152
+[#1153]: https://github.com/tokio-rs/toasty/pull/1153
+[#1155]: https://github.com/tokio-rs/toasty/pull/1155
+
 ## [0.9.0](https://github.com/tokio-rs/toasty/compare/toasty-v0.8.0...toasty-v0.9.0) - 2026-07-23
 
 ### Added

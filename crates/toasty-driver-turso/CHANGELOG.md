@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0](https://github.com/tokio-rs/toasty/compare/toasty-driver-turso-v0.9.0...toasty-driver-turso-v0.10.0) - 2026-08-07
+
+### Fixed
+
+- resolve authority-form sqlite and turso URLs to a file path ([#1127])
+
+### Changed
+
+- [**breaking**] name the SQL dialect on `Capability::sql` ([#1155])
+
+[#1127]: https://github.com/tokio-rs/toasty/pull/1127
+[#1155]: https://github.com/tokio-rs/toasty/pull/1155
+
 ## [0.9.0](https://github.com/tokio-rs/toasty/compare/toasty-driver-turso-v0.8.0...toasty-driver-turso-v0.9.0) - 2026-07-23
 
 ### Added

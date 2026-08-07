@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0](https://github.com/tokio-rs/toasty/compare/toasty-driver-integration-suite-v0.9.0...toasty-driver-integration-suite-v0.10.0) - 2026-08-07
+
+### Changed
+
+- [**breaking**] SQL dialect is now named on the `Capability::sql` API ([#1155])
+
+### Fixed
+
+- First page of paginated results no longer includes the previous cursor ([#1153])
+- Pagination cursors now correctly preserved when using includes ([#1152])
+- Cursor pagination is now deterministic ([#1142])
+- Pagination now works correctly with multiple order-by keys ([#1124])
+- Query offset now preserved when selecting a single row ([#1151])
+- Null foreign keys are now correctly excluded from relation subqueries ([#1148])
+- Newtype foreign keys are now correctly lowered in via includes ([#1137])
+- Fixed query optimization for detached IN-subquery statements ([#1138])
+
+[#1124]: https://github.com/tokio-rs/toasty/pull/1124
+[#1137]: https://github.com/tokio-rs/toasty/pull/1137
+[#1138]: https://github.com/tokio-rs/toasty/pull/1138
+[#1142]: https://github.com/tokio-rs/toasty/pull/1142
+[#1148]: https://github.com/tokio-rs/toasty/pull/1148
+[#1151]: https://github.com/tokio-rs/toasty/pull/1151
+[#1152]: https://github.com/tokio-rs/toasty/pull/1152
+[#1153]: https://github.com/tokio-rs/toasty/pull/1153
+[#1155]: https://github.com/tokio-rs/toasty/pull/1155
+
 ## [0.9.0](https://github.com/tokio-rs/toasty/compare/toasty-driver-integration-suite-v0.8.0...toasty-driver-integration-suite-v0.9.0) - 2026-07-23
 
 ### Added
